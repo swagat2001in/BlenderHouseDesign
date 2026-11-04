@@ -1106,6 +1106,9 @@ def build(cut_z=None, style="rajasthani"):
     if style == "odia":
         from style_odia import OdiaBuilder
         b = OdiaBuilder()
+    elif style == "goan":
+        from style_goan import GoanBuilder
+        b = GoanBuilder()
     elif style == "kerala":
         from style_kerala import KeralaBuilder
         b = KeralaBuilder()
