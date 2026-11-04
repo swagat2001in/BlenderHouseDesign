@@ -367,7 +367,26 @@ python generator/plans.py                    # dimensioned SVG plans</pre>
   new ResizeObserver(resize).observe(el); resize();
   setView('street', true);
 
-  new THREE.GLTFLoader().load('model/home_hotel.glb', (gltf) => {
+  // The model ships as glTF JSON with an embedded base64 buffer (a file type every host serves).
+  // Rebuild a binary GLB in memory so nothing is fetched from a data: URI.
+  function jsonToGlb(doc) {
+    const uri = doc.buffers[0].uri; delete doc.buffers[0].uri;
+    const bin = Uint8Array.from(atob(uri.slice(uri.indexOf(',') + 1)), (c) => c.charCodeAt(0));
+    let js = new TextEncoder().encode(JSON.stringify(doc));
+    const pad4 = (n) => (n + 3) & ~3;
+    const jl = pad4(js.length), bl = pad4(bin.length);
+    const out = new Uint8Array(12 + 8 + jl + 8 + bl); const dv = new DataView(out.buffer);
+    dv.setUint32(0, 0x46546C67, true); dv.setUint32(4, 2, true); dv.setUint32(8, out.length, true);
+    dv.setUint32(12, jl, true); dv.setUint32(16, 0x4E4F534A, true); out.fill(0x20, 20, 20 + jl); out.set(js, 20);
+    const o = 20 + jl; dv.setUint32(o, bl, true); dv.setUint32(o + 4, 0x004E4942, true); out.set(bin, o + 8);
+    return out.buffer;
+  }
+  function loadModel(onLoad, onError) {
+    fetch('model/home_hotel.gltf.json').then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then((doc) => new THREE.GLTFLoader().parse(jsonToGlb(doc), '', onLoad, onError))
+      .catch(onError);
+  }
+  loadModel((gltf) => {
     const root = gltf.scene;
     root.traverse((o) => {
       if (!o.isMesh) return;
@@ -381,8 +400,6 @@ python generator/plans.py                    # dimensioned SVG plans</pre>
     scene.add(root);
     status.remove();
     loop();
-  }, (ev) => {
-    if (ev.total) status.textContent = `Loading model… ${Math.round(ev.loaded / ev.total * 100)}%`;
   }, () => { status.textContent = 'The model file could not be loaded. The renders below show the design.'; });
 
   function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); }

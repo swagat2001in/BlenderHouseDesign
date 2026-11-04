@@ -161,6 +161,8 @@ def export():
         bpy.data.objects.remove(ob)
     bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", export_apply=True,
                               export_cameras=False, export_lights=False)
+    from glb_to_json import convert
+    convert(glb, glb.replace(".glb", ".gltf.json"))   # same model as JSON for the web viewer
     print("[export]", blend, glb, flush=True)
 
 
