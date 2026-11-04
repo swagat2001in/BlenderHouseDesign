@@ -76,6 +76,7 @@ class Builder:
     STYLE = "rajasthani"
     PALETTE = {}   # material overrides {name: (hex, rough, metal, extra)}
     CHHATRIS = L.CHHATRIS   # roof corner kiosks (a style may drop them)
+    VIEW_OVERRIDES = {}     # per-style camera tweaks {view: {key: value}}
 
     def __init__(self):
         self.mats = {}
@@ -105,6 +106,25 @@ class Builder:
             except Exception:
                 pass
         m.diffuse_color = rgba
+        if extra.get("brick"):
+            # laterite blocks: brick pattern on (x + y, z) so it wraps axis-aligned walls
+            tc = nt.nodes.new("ShaderNodeTexCoord")
+            sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+            add = nt.nodes.new("ShaderNodeMath")
+            comb = nt.nodes.new("ShaderNodeCombineXYZ")
+            brick = nt.nodes.new("ShaderNodeTexBrick")
+            nt.links.new(tc.outputs["Object"], sep.inputs["Vector"])
+            nt.links.new(sep.outputs["X"], add.inputs[0])
+            nt.links.new(sep.outputs["Y"], add.inputs[1])
+            nt.links.new(add.outputs["Value"], comb.inputs["X"])
+            nt.links.new(sep.outputs["Z"], comb.inputs["Y"])
+            nt.links.new(comb.outputs["Vector"], brick.inputs["Vector"])
+            brick.inputs["Color1"].default_value = rgba
+            brick.inputs["Color2"].default_value = hex_rgba(extra.get("brick2", hx))
+            brick.inputs["Mortar"].default_value = hex_rgba(extra["brick"])
+            brick.inputs["Scale"].default_value = extra.get("brick_scale", 1.6)
+            brick.inputs["Mortar Size"].default_value = 0.012
+            nt.links.new(brick.outputs["Color"], bsdf.inputs["Base Color"])
         if extra.get("checker"):
             # patterned floor tiles for renders (flat base colour is kept for glTF)
             tc = nt.nodes.new("ShaderNodeTexCoord")
@@ -1086,6 +1106,9 @@ def build(cut_z=None, style="rajasthani"):
     if style == "odia":
         from style_odia import OdiaBuilder
         b = OdiaBuilder()
+    elif style == "kerala":
+        from style_kerala import KeralaBuilder
+        b = KeralaBuilder()
     elif style == "chettinad":
         from style_chettinad import ChettinadBuilder
         b = ChettinadBuilder()

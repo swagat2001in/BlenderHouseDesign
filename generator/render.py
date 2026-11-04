@@ -142,9 +142,10 @@ def out_dir(*parts):
 
 
 def render_view(name, samples, scale):
-    v = VIEWS[name]
+    v = dict(VIEWS[name])
     t0 = time.time()
-    BM.build(cut_z=v["cut"], style=STYLE)
+    b = BM.build(cut_z=v["cut"], style=STYLE)
+    v.update(b.VIEW_OVERRIDES.get(name, {}))
     sky = setup_scene(samples, scale)
     sun(*v["sun"], sky=sky)
     if v.get("interior"):
@@ -185,7 +186,7 @@ def main():
     ap.add_argument("--scale", type=int, default=100)
     ap.add_argument("--export-only", action="store_true")
     ap.add_argument("--no-export", action="store_true")
-    ap.add_argument("--style", default="rajasthani", choices=["rajasthani", "odia", "chettinad"])
+    ap.add_argument("--style", default="rajasthani", choices=["rajasthani", "odia", "chettinad", "kerala"])
     a = ap.parse_args(argv)
     global STYLE
     STYLE = a.style

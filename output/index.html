@@ -58,7 +58,8 @@ p { margin: 0; }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); }
 .style-note { color: var(--ink); max-width: 72ch; font-size: 0.95rem; }
 body:not([data-style="odia"]) .only-o, body:not([data-style="chettinad"]) .only-c,
-body[data-style="odia"] .only-r, body[data-style="chettinad"] .only-r { display: none; }
+body:not([data-style="kerala"]) .only-k,
+body[data-style="odia"] .only-r, body[data-style="chettinad"] .only-r, body[data-style="kerala"] .only-r { display: none; }
 
 /* title strip */
 header { display: grid; gap: 14px; }
@@ -148,16 +149,18 @@ pre { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4p
   <header>
     <div class="eyebrow">Concept design · Puri, Odisha</div>
     <h1>Puri Haveli Home-Hotel</h1>
-    <p class="lede">A home-cum-guesthouse on a 30'&nbsp;×&nbsp;40' plot with the road on the north. The ground floor is open stilt parking; the first floor has three guest rooms with attached baths and a small kitchenette. The columns, stair and roof slab are set up for two more floors. The same plan is shown in three styles.</p>
+    <p class="lede">A home-cum-guesthouse on a 30'&nbsp;×&nbsp;40' plot with the road on the north. The ground floor is open stilt parking; the first floor has three guest rooms with attached baths and a small kitchenette. The columns, stair and roof slab are set up for two more floors. The same plan is shown in four styles.</p>
     <div class="style-pick">
       <div class="seg" role="group" aria-label="Architectural style">
         <button data-style="rajasthani" aria-pressed="true">Rajasthani haveli</button>
         <button data-style="odia" aria-pressed="false">Odia / Kalinga</button>
         <button data-style="chettinad" aria-pressed="false">Chettinad</button>
+        <button data-style="kerala" aria-pressed="false">Kerala</button>
       </div>
       <p class="style-note only-r">Jaipur-pink lime plaster with cream outlines, jharokha balconies, stone chhajja eaves, cusped arches, jaali screens, a crenellated parapet and domed chhatris.</p>
       <p class="style-note only-o">Laterite walls with khondalite stone bands, corbelled stone openings instead of arches, temple-style stone balusters, bay windows and roof pavilions with stepped pidha roofs, a rekha tower over the stair, a Konark-wheel relief at the entrance and a Pattachitra mural in the parking.</p>
       <p class="style-note only-c">Egg-white lime plaster with red-oxide bands, granite pillars with teak bracket capitals in the parking, peacock-green louvred shutters under stained-glass transoms, carved Burma-teak balconies under Mangalore-tile canopies, a carved teak entrance door with brass studs, a teak colonnade at the rear sit-outs, a stucco crest on the parapet, and a tiled terrace pavilion with an oonjal swing. Athangudi-tile floors inside.</p>
+      <p class="style-note only-k">Inspired by the Kerala nalukettu: a steep hip-and-gable clay-tile roof over the whole terrace on timber posts, with lattice mukhappu gables and brass kodi finials. White lime walls with laterite courses and laterite piers in the parking. Wooden azhi bar windows under tile hoods, road-side balconies with charupady seats under their own little gables, a gabled timber canopy over the entrance, and a charupady along the rear sit-outs. Red-oxide floors and wooden ceilings inside, a tulasi thara on the terrace. The big roof stands on a light frame and comes off when the 2nd floor is built.</p>
     </div>
     <div class="facts">
       <div class="fact"><b>1,200 sq ft</b><span>plot, 30'-0" × 40'-0"</span></div>
@@ -220,10 +223,10 @@ pre { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4p
       <p class="lede">Rendered with Cycles from the same model. Select any image to enlarge it.</p>
     </div>
     <div class="gallery">
-      <button class="shot wide" data-full="renders/hero.jpg" data-name="hero"><figure style="margin:0;display:grid;gap:6px"><img src="renders/hero.jpg" alt="Front of the house from across the road" loading="lazy"><figcaption><span class="only-r"><b>From the road (north-east).</b> Two jharokhas on the first floor, cusped stilt arches and the stair entrance.</span><span class="only-o"><b>From the road (north-east).</b> Baluster bay windows with pidha roofs, corbelled stilt openings, the Konark wheel beside the stair door.</span><span class="only-c"><b>From the road (north-east).</b> Teak balconies under tile canopies, shuttered windows, the stucco crest, and granite pillars in the parking.</span></figcaption></figure></button>
-      <button class="shot" data-full="renders/street.jpg" data-name="street"><figure style="margin:0;display:grid;gap:6px"><img src="renders/street.jpg" alt="Street-level view of the stilt parking" loading="lazy"><figcaption><span class="only-r"><b>Street level.</b> Car entry under the arches; the plinth is 1 ft above the road.</span><span class="only-o"><b>Street level.</b> Car entry under stone corbels and lintels; the Pattachitra panel is on the stair wall inside.</span><span class="only-c"><b>Street level.</b> Granite pillars with teak bracket capitals, and the carved teak entrance door with brass studs.</span></figcaption></figure></button>
-      <button class="shot" data-full="renders/aerial.jpg" data-name="aerial"><figure style="margin:0;display:grid;gap:6px"><img src="renders/aerial.jpg" alt="Aerial view showing roof terrace and chhatris" loading="lazy"><figcaption><span class="only-r"><b>Aerial.</b> Roof terrace, corner chhatris, the stair mumty and the water tank.</span><span class="only-o"><b>Aerial.</b> Roof terrace, three pidha pavilions, and the rekha tower over the stair mumty.</span><span class="only-c"><b>Aerial.</b> Terrace with the tiled oonjal pavilion, the hip-roofed stair mumty and the urn-topped parapet.</span></figcaption></figure></button>
-      <button class="shot" data-full="renders/rear.jpg" data-name="rear"><figure style="margin:0;display:grid;gap:6px"><img src="renders/rear.jpg" alt="Rear view showing the arcaded sit-outs" loading="lazy"><figcaption><span class="only-r"><b>Rear (south).</b> The arcaded sit-outs of Rooms 2 and 3 with jaali railings.</span><span class="only-o"><b>Rear (south).</b> Pillared sit-outs of Rooms 2 and 3 with stone baluster railings.</span><span class="only-c"><b>Rear (south).</b> Teak colonnade with turned wooden railings in front of the sit-outs, under a Mangalore-tile pent roof.</span></figcaption></figure></button>
+      <button class="shot wide" data-full="renders/hero.jpg" data-name="hero"><figure style="margin:0;display:grid;gap:6px"><img src="renders/hero.jpg" alt="Front of the house from across the road" loading="lazy"><figcaption><span class="only-r"><b>From the road (north-east).</b> Two jharokhas on the first floor, cusped stilt arches and the stair entrance.</span><span class="only-o"><b>From the road (north-east).</b> Baluster bay windows with pidha roofs, corbelled stilt openings, the Konark wheel beside the stair door.</span><span class="only-c"><b>From the road (north-east).</b> Teak balconies under tile canopies, shuttered windows, the stucco crest, and granite pillars in the parking.</span><span class="only-k"><b>From the road (north-east).</b> The lattice mukhappu gable and brass kodi on the big tile roof, gabled charupady balconies, the gabled entrance canopy.</span></figcaption></figure></button>
+      <button class="shot" data-full="renders/street.jpg" data-name="street"><figure style="margin:0;display:grid;gap:6px"><img src="renders/street.jpg" alt="Street-level view of the stilt parking" loading="lazy"><figcaption><span class="only-r"><b>Street level.</b> Car entry under the arches; the plinth is 1 ft above the road.</span><span class="only-o"><b>Street level.</b> Car entry under stone corbels and lintels; the Pattachitra panel is on the stair wall inside.</span><span class="only-c"><b>Street level.</b> Granite pillars with teak bracket capitals, and the carved teak entrance door with brass studs.</span><span class="only-k"><b>Street level.</b> Laterite piers with timber caps, azhi bar windows under tile hoods.</span></figcaption></figure></button>
+      <button class="shot" data-full="renders/aerial.jpg" data-name="aerial"><figure style="margin:0;display:grid;gap:6px"><img src="renders/aerial.jpg" alt="Aerial view showing roof terrace and chhatris" loading="lazy"><figcaption><span class="only-r"><b>Aerial.</b> Roof terrace, corner chhatris, the stair mumty and the water tank.</span><span class="only-o"><b>Aerial.</b> Roof terrace, three pidha pavilions, and the rekha tower over the stair mumty.</span><span class="only-c"><b>Aerial.</b> Terrace with the tiled oonjal pavilion, the hip-roofed stair mumty and the urn-topped parapet.</span><span class="only-k"><b>Aerial.</b> The hip-and-gable roof shelters the whole terrace, so it works as an open-air hall.</span></figcaption></figure></button>
+      <button class="shot" data-full="renders/rear.jpg" data-name="rear"><figure style="margin:0;display:grid;gap:6px"><img src="renders/rear.jpg" alt="Rear view showing the arcaded sit-outs" loading="lazy"><figcaption><span class="only-r"><b>Rear (south).</b> The arcaded sit-outs of Rooms 2 and 3 with jaali railings.</span><span class="only-o"><b>Rear (south).</b> Pillared sit-outs of Rooms 2 and 3 with stone baluster railings.</span><span class="only-c"><b>Rear (south).</b> Teak colonnade with turned wooden railings in front of the sit-outs, under a Mangalore-tile pent roof.</span><span class="only-k"><b>Rear (south).</b> Timber posts and a charupady sloped-back seat along each sit-out, under a tile skirt roof.</span></figcaption></figure></button>
       <button class="shot" data-full="renders/interior.jpg" data-name="interior"><figure style="margin:0;display:grid;gap:6px"><img src="renders/interior.jpg" alt="Interior of Room 2" loading="lazy"><figcaption><b>Room 2.</b> Queen bed, ivory lime-plaster walls, glazed doors to the sit-out.</figcaption></figure></button>
       <button class="shot" data-full="renders/first_floor.jpg" data-name="first_floor"><figure style="margin:0;display:grid;gap:6px"><img src="renders/first_floor.jpg" alt="First floor cut-away from above" loading="lazy"><figcaption><b>First floor cut-away.</b> Three rooms, three baths, kitchenette, lobby and stair.</figcaption></figure></button>
       <button class="shot" data-full="renders/ground_floor.jpg" data-name="ground_floor"><figure style="margin:0;display:grid;gap:6px"><img src="renders/ground_floor.jpg" alt="Ground floor cut-away from above" loading="lazy"><figcaption><b>Ground floor cut-away.</b> Two cars in front, one tandem behind (room for a fourth), bikes on the east side.</figcaption></figure></button>
@@ -468,7 +471,7 @@ python generator/plans.py                    # dimensioned SVG plans</pre>
   }));
 })();
 
-// style switch (#odia or #chettinad in the link opens that version)
+// style switch (#odia, #chettinad or #kerala in the link opens that version)
 (function () {
   const btns = document.querySelectorAll('.seg [data-style]');
   let current = null;
@@ -490,7 +493,7 @@ python generator/plans.py                    # dimensioned SVG plans</pre>
   }));
   const fromHash = () => {
     const h = location.hash.slice(1);
-    setStyle(['odia', 'chettinad'].includes(h) ? h : 'rajasthani');
+    setStyle(['odia', 'chettinad', 'kerala'].includes(h) ? h : 'rajasthani');
   };
   window.addEventListener('hashchange', fromHash);
   fromHash();
