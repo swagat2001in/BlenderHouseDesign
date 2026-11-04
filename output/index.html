@@ -1,0 +1,431 @@
+<title>Puri Haveli Home-Hotel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=Rozha+One&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an architect's sheet — title strip, one big live model, then renders, plans and schedules in a single column. */
+:root {
+  --paper: #f6f4f0;
+  --sheet: #fffdfa;
+  --ink: #1d1b2b;
+  --muted: #6c6779;
+  --rule: #e2ddd5;
+  --indigo: #2f3b8f;      /* Jodhpur blue: interactive accent */
+  --pink: #c8664b;        /* Jaipur pink: dimension marks */
+  --sky-top: #cfe0ee;
+  --sky-bottom: #f3efe8;
+  --chip: #ece8f6;
+  --font-display: "Rozha One", "Georgia", serif;
+  --font-body: "Hind", "Segoe UI", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #15141d; --sheet: #1c1b26; --ink: #ece9f3; --muted: #a29db2; --rule: #2e2c3b;
+    --indigo: #9aa6f5; --pink: #ec9277; --sky-top: #1d2438; --sky-bottom: #2a2a36; --chip: #282843;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #15141d; --sheet: #1c1b26; --ink: #ece9f3; --muted: #a29db2; --rule: #2e2c3b;
+  --indigo: #9aa6f5; --pink: #ec9277; --sky-top: #1d2438; --sky-bottom: #2a2a36; --chip: #282843;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--font-body);
+  font-size: 16px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2 { font-family: var(--font-display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.1; }
+h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 64ch; }
+.mono { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--font-data); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); }
+
+/* title strip */
+header { display: grid; gap: 14px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.fact { display: grid; gap: 0; }
+.fact b { font-family: var(--font-data); font-size: 1.05rem; font-weight: 600; }
+.fact span { font-size: 0.82rem; color: var(--muted); }
+
+section { display: grid; gap: 18px; min-width: 0; }
+.sec-head { display: grid; gap: 6px; }
+
+/* viewer */
+.viewer {
+  position: relative; border-radius: 6px; overflow: hidden; border: 1px solid var(--rule);
+  background: linear-gradient(var(--sky-top), var(--sky-bottom));
+  aspect-ratio: 16 / 10; max-width: 100%; min-height: 360px;
+}
+.viewer canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.viewer .status {
+  position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted);
+  font-family: var(--font-data); font-size: 0.85rem; pointer-events: none;
+}
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 0.78rem; color: var(--muted);
+  background: color-mix(in srgb, var(--sheet) 80%, transparent); padding: 2px 8px; border-radius: 4px; }
+.controls { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
+.ctl { display: grid; gap: 8px; min-width: 0; }
+.ctl-label { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font: inherit; font-size: 0.9rem; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink);
+  padding: 5px 12px; border-radius: 999px; cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--indigo); color: var(--sheet); border-color: var(--indigo); }
+.chip:hover { border-color: var(--indigo); }
+.chip:focus-visible, .tab:focus-visible, .shot:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+.section-cut { display: grid; gap: 6px; }
+.section-cut input { width: 100%; accent-color: var(--indigo); }
+.ticks { position: relative; height: 16px; font-family: var(--font-data); font-size: 0.7rem; color: var(--muted); }
+.ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.cut-read { font-family: var(--font-data); font-size: 0.85rem; }
+
+/* renders */
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.shot { display: grid; gap: 6px; margin: 0; padding: 0; border: 0; background: none; text-align: left; color: inherit; cursor: zoom-in; font: inherit; }
+.shot img { width: 100%; aspect-ratio: 8 / 5; object-fit: cover; border-radius: 4px; border: 1px solid var(--rule); background: var(--rule); }
+.shot figcaption { font-size: 0.88rem; color: var(--muted); }
+.shot figcaption b { color: var(--ink); font-weight: 600; }
+.shot.wide { grid-column: 1 / -1; }
+.shot.wide img { aspect-ratio: 16 / 8; }
+dialog { border: 0; padding: 0; background: transparent; max-width: min(1400px, 96vw); }
+dialog::backdrop { background: rgb(10 10 16 / 0.82); }
+dialog img { width: 100%; height: auto; max-height: 88vh; object-fit: contain; display: block; border-radius: 4px; }
+dialog p { color: #f3f1f8; padding: 8px 2px; font-size: 0.92rem; }
+
+/* plans */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+.tab { font: inherit; background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 14px; color: var(--muted); cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--ink); border-color: var(--pink); font-weight: 600; }
+.plan { background: #fbf8f3; border: 1px solid var(--rule); border-radius: 4px; display: grid; place-items: center; padding: 10px; }
+.plan img { width: 100%; max-width: 620px; height: auto; }
+
+/* schedules */
+.two { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; }
+.table-wrap { overflow-x: auto; min-width: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+th, td { text-align: left; padding: 9px 10px 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.levels { display: grid; gap: 0; }
+.level { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+.level .mono { color: var(--pink); }
+ul.clean { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; max-width: 72ch; }
+ul.clean li::marker { color: var(--pink); }
+pre { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; overflow-x: auto; font-family: var(--font-data); font-size: 0.82rem; margin: 0; }
+
+@media (max-width: 760px) {
+  .controls, .two { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; }
+  .viewer { aspect-ratio: 4 / 5; }
+  .hint { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Concept design · Puri, Odisha</div>
+    <h1>Puri Haveli Home-Hotel</h1>
+    <p class="lede">A home-cum-guesthouse on a 30'&nbsp;×&nbsp;40' plot with the road on the north. The ground floor is open stilt parking; the first floor has three guest rooms with attached baths and a small kitchenette. The styling follows a Rajasthani haveli: Jaipur-pink lime plaster with cream outlines, jharokha balconies, stone chhajja eaves, cusped arches, jaali screens, a crenellated parapet and domed chhatris. The columns, stair and roof slab are set up for two more floors.</p>
+    <div class="facts">
+      <div class="fact"><b>1,200 sq ft</b><span>plot, 30'-0" × 40'-0"</span></div>
+      <div class="fact"><b>G + 1</b><span>built now, ready for G + 3</span></div>
+      <div class="fact"><b>3 rooms</b><span>each with attached bath</span></div>
+      <div class="fact"><b>2 – 4 cars</b><span>plus 4 – 6 two-wheelers</span></div>
+      <div class="fact"><b>+22'-0"</b><span>roof terrace level</span></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-model">
+    <div class="sec-head">
+      <h2 id="h-model">Walk around the model</h2>
+      <p class="lede">The full Blender model in your browser. Turn floors on and off, or slide the section cut down to look into the rooms.</p>
+    </div>
+    <div class="viewer" id="viewer">
+      <div class="status" id="status">Loading model…</div>
+      <div class="hint">Drag to orbit · scroll or pinch to zoom · right-drag to pan</div>
+    </div>
+    <div class="controls">
+      <div class="ctl">
+        <div class="ctl-label">Show</div>
+        <div class="chips" id="layers">
+          <button class="chip" aria-pressed="true" data-layer="SITE">Street &amp; trees</button>
+          <button class="chip" aria-pressed="true" data-layer="GF">Ground floor</button>
+          <button class="chip" aria-pressed="true" data-layer="FF">First floor</button>
+          <button class="chip" aria-pressed="true" data-layer="ROOF">Roof &amp; chhatris</button>
+          <button class="chip" aria-pressed="true" data-layer="FURNITURE">Furniture &amp; cars</button>
+        </div>
+        <div class="ctl-label" style="margin-top:8px">Camera</div>
+        <div class="chips" id="views">
+          <button class="chip" data-view="street">From the road</button>
+          <button class="chip" data-view="aerial">Aerial</button>
+          <button class="chip" data-view="rear">Rear (sit-outs)</button>
+          <button class="chip" data-view="plan">Top down</button>
+        </div>
+      </div>
+      <div class="ctl section-cut">
+        <label class="ctl-label" for="cut">Section cut height</label>
+        <input type="range" id="cut" min="0" max="36" step="0.25" value="36">
+        <div class="ticks" aria-hidden="true">
+          <span style="left:2.8%">+1'</span>
+          <span style="left:31.9%">FF +11'-6"</span>
+          <span style="left:61.1%">Roof +22'</span>
+          <span style="left:97%">top</span>
+        </div>
+        <div class="cut-read" id="cutRead">No cut: whole building</div>
+        <div class="chips">
+          <button class="chip" data-cut="36">Whole building</button>
+          <button class="chip" data-cut="16">Cut first floor</button>
+          <button class="chip" data-cut="7">Cut ground floor</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-renders">
+    <div class="sec-head">
+      <h2 id="h-renders">Renders</h2>
+      <p class="lede">Rendered with Cycles from the same model. Select any image to enlarge it.</p>
+    </div>
+    <div class="gallery">
+      <button class="shot wide" data-full="renders/hero.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/hero.jpg" alt="Front of the house from across the road" loading="lazy"><figcaption><b>From the road (north-east).</b> Two jharokhas on the first floor, cusped stilt arches and the stair entrance.</figcaption></figure></button>
+      <button class="shot" data-full="renders/street.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/street.jpg" alt="Street-level view of the stilt parking" loading="lazy"><figcaption><b>Street level.</b> Car entry under the arches; the plinth is 1 ft above the road.</figcaption></figure></button>
+      <button class="shot" data-full="renders/aerial.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/aerial.jpg" alt="Aerial view showing roof terrace and chhatris" loading="lazy"><figcaption><b>Aerial.</b> Roof terrace, corner chhatris, the stair mumty and the water tank.</figcaption></figure></button>
+      <button class="shot" data-full="renders/rear.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/rear.jpg" alt="Rear view showing the arcaded sit-outs" loading="lazy"><figcaption><b>Rear (south).</b> The arcaded sit-outs of Rooms 2 and 3 with jaali railings.</figcaption></figure></button>
+      <button class="shot" data-full="renders/interior.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/interior.jpg" alt="Interior of Room 2" loading="lazy"><figcaption><b>Room 2.</b> Queen bed with an arched headboard; glazed doors to the sit-out.</figcaption></figure></button>
+      <button class="shot" data-full="renders/first_floor.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/first_floor.jpg" alt="First floor cut-away from above" loading="lazy"><figcaption><b>First floor cut-away.</b> Three rooms, three baths, kitchenette, lobby and stair.</figcaption></figure></button>
+      <button class="shot" data-full="renders/ground_floor.jpg"><figure style="margin:0;display:grid;gap:6px"><img src="renders/ground_floor.jpg" alt="Ground floor cut-away from above" loading="lazy"><figcaption><b>Ground floor cut-away.</b> Two cars in front, one tandem behind (room for a fourth), bikes on the east side.</figcaption></figure></button>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-plans">
+    <div class="sec-head">
+      <h2 id="h-plans">Floor plans</h2>
+      <p class="lede">Dimensioned plans drawn from the same layout file as the model. North (the road) is at the top.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Floor plans">
+      <button class="tab" role="tab" id="tab-gf" aria-selected="false" aria-controls="plan" data-plan="plans/ground_floor.svg">Ground floor</button>
+      <button class="tab" role="tab" id="tab-ff" aria-selected="true" aria-controls="plan" data-plan="plans/first_floor.svg">First floor</button>
+      <button class="tab" role="tab" id="tab-rf" aria-selected="false" aria-controls="plan" data-plan="plans/roof_plan.svg">Roof</button>
+    </div>
+    <div class="plan" id="plan" role="tabpanel"><img id="planImg" src="plans/first_floor.svg" alt="First floor plan"></div>
+  </section>
+
+  <section aria-labelledby="h-sched">
+    <div class="two">
+      <div class="sec-head" style="gap:14px">
+        <h2 id="h-sched">Room schedule</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Space</th><th>Size</th><th>Area</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Room 1, road-facing</td><td class="num">12' × 15'</td><td class="num">180 sq ft</td><td>Jharokha window seat; Bath 1 5' × 7'</td></tr>
+              <tr><td>Room 2</td><td class="num">15' × 17'</td><td class="num">215 sq ft</td><td>Less Bath 2 (5' × 8'); private sit-out 15' × 4'</td></tr>
+              <tr><td>Room 3</td><td class="num">15' × 17'</td><td class="num">215 sq ft</td><td>Less Bath 3 (5' × 8'); private sit-out 15' × 4'</td></tr>
+              <tr><td>Kitchenette</td><td class="num">5' × 8'</td><td class="num">40 sq ft</td><td>L-counter, sink, two-burner hob, small fridge</td></tr>
+              <tr><td>Lobby + corridor</td><td class="num">5' × 15' + 30' × 4'</td><td class="num">195 sq ft</td><td>Arched opening from the corridor</td></tr>
+              <tr><td>Staircase</td><td class="num">8' × 15'</td><td class="num">120 sq ft</td><td>Dog-leg, 6.3" risers, 10" treads</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="lede" style="font-size:.88rem">Areas are measured to wall centre-lines and rounded.</p>
+      </div>
+      <div class="sec-head" style="gap:14px">
+        <h2>Levels</h2>
+        <div class="levels">
+          <div class="level"><span class="mono">±0'-0"</span><span>Road</span></div>
+          <div class="level"><span class="mono">+1'-0"</span><span>Stilt floor (plinth). Ramp 1:4 at the gate</span></div>
+          <div class="level"><span class="mono">+8'-9"</span><span>Clear height under the beams in the parking</span></div>
+          <div class="level"><span class="mono">+11'-6"</span><span>First floor</span></div>
+          <div class="level"><span class="mono">+22'-0"</span><span>Roof terrace, which becomes the future 2nd floor</span></div>
+          <div class="level"><span class="mono">+25'-0"</span><span>Top of parapet (kangura above)</span></div>
+          <div class="level"><span class="mono">+30'-0"</span><span>Mumty roof with water tank</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-ext">
+    <div class="two">
+      <div class="sec-head" style="gap:14px">
+        <h2 id="h-ext">Ready for more floors</h2>
+        <ul class="clean">
+          <li>12" × 12" columns on one grid, with footings sized for G + 3.</li>
+          <li>Capped starter bars stick out 2 ft above the roof at every column.</li>
+          <li>The roof slab is designed as a floor slab, so it becomes the 2nd-floor floor as-is.</li>
+          <li>The dog-leg stair keeps going up. The mumty on the roof is a light enclosure to remove later.</li>
+          <li>Bath and kitchen plumbing sits in vertical stacks that repeat on each floor.</li>
+          <li>The reception for the 2nd floor opens off the stair landing, the same way the first-floor lobby does.</li>
+        </ul>
+      </div>
+      <div class="sec-head" style="gap:14px">
+        <h2>Check before building</h2>
+        <ul class="clean">
+          <li>The jharokhas and roof chhajja project about 1'-9" past the north plot line, over the road edge. Make them shallower if the line has to be kept clear.</li>
+          <li>Bath 1 has no outside wall. Give it an exhaust fan with a duct to the facade. Fit a chimney or exhaust fan over the kitchenette hob.</li>
+          <li>Side windows face the neighbours. Keep them high or screened with jaali.</li>
+          <li>Puri is coastal and in a cyclone zone. Ask a structural engineer for the design, and use corrosion-resistant rebar cover and good roof waterproofing.</li>
+          <li>This is a concept model for discussion, not a construction drawing.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-src">
+    <div class="sec-head">
+      <h2 id="h-src">Change the design</h2>
+      <p class="lede">Every dimension lives in <span class="mono">design/layout.py</span> in feet. Edit a value, then rebuild the model, renders and plans:</p>
+    </div>
+    <pre>pip install bpy                              # Blender as a Python module
+python generator/render.py                   # renders + .blend + .glb
+python generator/render.py --views hero --samples 32 --scale 50   # quick preview
+python generator/plans.py                    # dimensioned SVG plans</pre>
+  </section>
+</div>
+
+<dialog id="lightbox"><img id="lbImg" alt=""><p id="lbCap"></p></dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function () {
+  const FT = 0.3048;
+  const el = document.getElementById('viewer');
+  const status = document.getElementById('status');
+  if (!window.THREE || !THREE.GLTFLoader) { status.textContent = 'The 3D viewer could not load. The renders below show the model.'; return; }
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.localClippingEnabled = true;
+  el.prepend(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 800);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.maxPolarAngle = Math.PI * 0.495;
+  controls.minDistance = 3; controls.maxDistance = 120;
+
+  scene.add(new THREE.HemisphereLight(0xdfeaf5, 0xb9a47f, 0.75));
+  const sun = new THREE.DirectionalLight(0xfff1dc, 2.1);
+  sun.position.set(30, 25, -24);   // north-east, high
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  const sc = sun.shadow.camera; sc.left = -18; sc.right = 18; sc.top = 18; sc.bottom = -18; sc.near = 1; sc.far = 120;
+  sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+  scene.add(sun); scene.add(sun.target);
+
+  const cutPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
+  const groups = { SITE: [], GF: [], FF: [], ROOF: [], FURNITURE: [] };
+  // model is built in Blender with z-up feet->metres; glTF converts to y-up (x, z, -y)
+  const C = new THREE.Vector3(15 * FT, 0, -20 * FT);
+  const P = (x, y, z) => new THREE.Vector3(x * FT, z * FT, -y * FT);   // plan feet -> three.js
+  sun.target.position.copy(C);
+
+  const VIEWS = {
+    street: { pos: P(48, 86, 7), tgt: P(15, 30, 13) },
+    aerial: { pos: P(-40, 82, 62), tgt: P(15, 18, 9) },
+    rear:   { pos: P(55, -48, 24), tgt: P(14, 16, 13) },
+    plan:   { pos: P(15, 19.9, 95), tgt: P(15, 20, 0) },
+  };
+  function setView(name, instant) {
+    const v = VIEWS[name]; if (!v) return;
+    if (instant || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      camera.position.copy(v.pos); controls.target.copy(v.tgt); controls.update(); return;
+    }
+    const p0 = camera.position.clone(), t0 = controls.target.clone(); const t1 = performance.now();
+    (function step(now) {
+      const k = Math.min(1, (now - t1) / 900); const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      camera.position.lerpVectors(p0, v.pos, e); controls.target.lerpVectors(t0, v.tgt, e); controls.update();
+      if (k < 1) requestAnimationFrame(step);
+    })(t1);
+  }
+
+  function resize() {
+    const r = el.getBoundingClientRect();
+    renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(el); resize();
+  setView('street', true);
+
+  new THREE.GLTFLoader().load('model/home_hotel.glb', (gltf) => {
+    const root = gltf.scene;
+    root.traverse((o) => {
+      if (!o.isMesh) return;
+      const key = (o.name.split('__')[0] || '').replace(/[^A-Z]/g, '');
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      mats.forEach((m) => { m.side = THREE.DoubleSide; m.clippingPlanes = [cutPlane]; m.clipShadows = true; });
+      const big = /ground|road|Earth|Asphalt|Concrete/.test(o.name) && key === 'SITE';
+      o.castShadow = !big; o.receiveShadow = true;
+      (groups[key] || groups.SITE).push(o);
+    });
+    scene.add(root);
+    status.remove();
+    loop();
+  }, (ev) => {
+    if (ev.total) status.textContent = `Loading model… ${Math.round(ev.loaded / ev.total * 100)}%`;
+  }, () => { status.textContent = 'The model file could not be loaded. The renders below show the design.'; });
+
+  function loop() { controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+
+  document.getElementById('layers').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-layer]'); if (!b) return;
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', String(on));
+    (groups[b.dataset.layer] || []).forEach((o) => { o.visible = on; });
+  });
+  document.getElementById('views').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-view]'); if (b) setView(b.dataset.view);
+  });
+
+  const cut = document.getElementById('cut'), cutRead = document.getElementById('cutRead');
+  function fmt(ft) { const f = Math.floor(ft + 1e-6); const i = Math.round((ft - f) * 12); return `+${f}'-${i}"`; }
+  function applyCut() {
+    const v = parseFloat(cut.value);
+    cutPlane.constant = v >= 36 ? 100 : v * FT;
+    cutRead.textContent = v >= 36 ? 'No cut: whole building' : `Cut at ${fmt(v)} above the road`;
+  }
+  cut.addEventListener('input', applyCut);
+  document.querySelectorAll('[data-cut]').forEach((b) => b.addEventListener('click', () => {
+    cut.value = b.dataset.cut; applyCut();
+    if (b.dataset.cut !== '36') setView('aerial');
+  }));
+})();
+
+// plans tabs
+(function () {
+  const tabs = document.querySelectorAll('.tab'), img = document.getElementById('planImg');
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+    img.src = t.dataset.plan; img.alt = t.textContent + ' plan';
+  }));
+})();
+
+// lightbox
+(function () {
+  const dlg = document.getElementById('lightbox'), im = document.getElementById('lbImg'), cap = document.getElementById('lbCap');
+  document.querySelectorAll('.shot').forEach((s) => s.addEventListener('click', () => {
+    im.src = s.dataset.full; im.alt = s.querySelector('img').alt; cap.textContent = s.querySelector('figcaption').textContent;
+    if (dlg.showModal) dlg.showModal();
+  }));
+  dlg.addEventListener('click', () => dlg.close());
+})();
+</script>

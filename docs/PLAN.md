@@ -1,6 +1,26 @@
 # Home-cum-Hotel on a 1200 sq ft plot: design and tooling plan
 
-Status: **draft for review**. Nothing is built yet.
+Status: **phases 1-4 built** (see "Decisions" below). The original draft is kept underneath for reference.
+
+## Decisions (from review)
+
+| Question | Answer |
+|---|---|
+| Plot | 30' x 40', road on the **north** |
+| Authority | Puri. No approval needed (self-financed), but the design still keeps to normal good practice |
+| Parking | Flexible: 2 cars at the front + 2 tandem behind (optional), 4-6 two-wheelers |
+| Vertical access | Staircase only (dog-leg), no lift |
+| Reception | Not now. It goes on the future 2nd floor, off the stair landing |
+| Future floors | Columns/footings for G+3, starter bars, stair continues, roof slab = future floor |
+| Tooling | Everything runs headless in the cloud: Blender `bpy` -> renders + `.glb` + web viewer |
+| Style | Traditional Rajasthani haveli (Jaipur pink, jharokhas, chhatris, jaali, cusped arches) |
+
+## As built (differences from the draft below)
+
+- Stair moved to the **north-east corner** (8' x 15'), entered straight from the road, so cars do not cross the stair.
+- First floor: Room 1 (12' x 15') faces the road with a jharokha. Rooms 2 and 3 (15' x 17' each, less the bath) are at the back with private 4'-deep arcaded sit-outs. Baths 2 and 3 sit on the side walls for natural ventilation.
+- Kitchenette 5' x 8' with a window on the road side; Bath 1 next to it needs an exhaust duct.
+- Levels: plinth +1'-0", first floor +11'-6", roof +22'-0" (10'-6" floor to floor).
 
 ## 1. Brief
 

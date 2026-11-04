@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 1170" width="820" height="1170" font-family="Helvetica, Arial, sans-serif"><rect width="100%" height="100%" fill="#fbf8f3"/><text x="110.0" y="34" font-size="20" font-weight="700" fill="#2b211c">Roof / terrace</text><text x="110.0" y="58" font-size="12" fill="#8a7d72">Kangura (crenellated) parapet, three corner chhatris, stair mumty with water tank. Every</text><text x="110.0" y="74" font-size="12" fill="#8a7d72">column continues up so 2nd/3rd floors can be added.</text><rect x="50.0" y="100.0" width="720.0" height="44.0" fill="#d9d4cc"/>
+<text x="410.0" y="122.0" font-size="12" font-weight="700" fill="#8a7d72" text-anchor="middle" dominant-baseline="middle">ROAD  (north side)</text>
+<g transform="translate(782.0 280.0)"><circle r="16" fill="none" stroke="#2b211c"/><path d="M0 -14 L6 6 L0 2 L-6 6 Z" fill="#2b211c"/><text y="-22" font-size="12" font-weight="700" text-anchor="middle" fill="#2b211c">N</text></g>
+<rect x="110.0" y="220.0" width="600.0" height="800.0" rx="0" fill="#f3e3d9" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="110.0" y="220.0" width="432.5" height="15.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="110.0" y="235.0" width="15.0" height="770.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="110.0" y="1005.0" width="600.0" height="15.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="695.0" y="527.5" width="15.0" height="477.5" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="542.5" y="288.0" width="15.0" height="224.5" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="542.5" y="235.0" width="15.0" height="5.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<line x1="542.5" y1="288.0" x2="494.5" y2="288.0" stroke="#2b211c" stroke-width="1.4"/>
+<path d="M 494.5 288.0 A 48.0 48.0 0 0 1 542.5 240.0" stroke="#8a7d72" stroke-width="0.8" fill="none"/>
+<rect x="542.5" y="512.5" width="67.5" height="15.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="670.0" y="512.5" width="40.0" height="15.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<line x1="610.0" y1="527.5" x2="670.0" y2="527.5" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="610.0" y1="522.5" x2="670.0" y2="522.5" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="610.0" y1="517.5" x2="670.0" y2="517.5" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="610.0" y1="512.5" x2="670.0" y2="512.5" stroke="#2b211c" stroke-width="0.8"/>
+<rect x="542.5" y="220.0" width="57.5" height="15.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="660.0" y="220.0" width="50.0" height="15.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<line x1="600.0" y1="235.0" x2="660.0" y2="235.0" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="600.0" y1="230.0" x2="660.0" y2="230.0" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="600.0" y1="225.0" x2="660.0" y2="225.0" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="600.0" y1="220.0" x2="660.0" y2="220.0" stroke="#2b211c" stroke-width="0.8"/>
+<rect x="695.0" y="235.0" width="15.0" height="277.5" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<rect x="115.0" y="225.0" width="100.0" height="100.0" rx="0" fill="#efe2c8" stroke="#2b211c" stroke-width="1" opacity="1.0"/>
+<circle cx="165.0" cy="275.0" r="42.0" fill="none" stroke="#2b211c"/>
+<text x="165.0" y="275.0" font-size="9" font-weight="700" fill="#2b211c" text-anchor="middle" dominant-baseline="middle">chhatri</text>
+<rect x="115.0" y="915.0" width="100.0" height="100.0" rx="0" fill="#efe2c8" stroke="#2b211c" stroke-width="1" opacity="1.0"/>
+<circle cx="165.0" cy="965.0" r="42.0" fill="none" stroke="#2b211c"/>
+<text x="165.0" y="965.0" font-size="9" font-weight="700" fill="#2b211c" text-anchor="middle" dominant-baseline="middle">chhatri</text>
+<rect x="605.0" y="915.0" width="100.0" height="100.0" rx="0" fill="#efe2c8" stroke="#2b211c" stroke-width="1" opacity="1.0"/>
+<circle cx="655.0" cy="965.0" r="42.0" fill="none" stroke="#2b211c"/>
+<text x="655.0" y="965.0" font-size="9" font-weight="700" fill="#2b211c" text-anchor="middle" dominant-baseline="middle">chhatri</text>
+<rect x="319.0" y="219.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="330.0" cy="230.0" r="2.5" fill="#d4876a"/>
+<rect x="109.0" y="399.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="120.0" cy="410.0" r="2.5" fill="#d4876a"/>
+<rect x="319.0" y="399.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="330.0" cy="410.0" r="2.5" fill="#d4876a"/>
+<rect x="109.0" y="589.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="120.0" cy="600.0" r="2.5" fill="#d4876a"/>
+<rect x="319.0" y="589.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="330.0" cy="600.0" r="2.5" fill="#d4876a"/>
+<rect x="539.0" y="589.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="550.0" cy="600.0" r="2.5" fill="#d4876a"/>
+<rect x="689.0" y="589.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="700.0" cy="600.0" r="2.5" fill="#d4876a"/>
+<rect x="109.0" y="789.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="120.0" cy="800.0" r="2.5" fill="#d4876a"/>
+<rect x="399.0" y="789.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="410.0" cy="800.0" r="2.5" fill="#d4876a"/>
+<rect x="689.0" y="789.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="700.0" cy="800.0" r="2.5" fill="#d4876a"/>
+<rect x="399.0" y="999.0" width="22.0" height="22.0" rx="0" fill="none" stroke="#d4876a" stroke-width="1.4" opacity="1.0"/>
+<circle cx="410.0" cy="1010.0" r="2.5" fill="#d4876a"/>
+<line x1="557.5" y1="446.0" x2="627.5" y2="446.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="429.3" x2="627.5" y2="429.3" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="412.7" x2="627.5" y2="412.7" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="396.0" x2="627.5" y2="396.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="379.3" x2="627.5" y2="379.3" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="362.7" x2="627.5" y2="362.7" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="346.0" x2="627.5" y2="346.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="329.3" x2="627.5" y2="329.3" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="312.7" x2="627.5" y2="312.7" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="557.5" y1="296.0" x2="627.5" y2="296.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="446.0" x2="702.5" y2="446.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="429.3" x2="702.5" y2="429.3" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="412.7" x2="702.5" y2="412.7" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="396.0" x2="702.5" y2="396.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="379.3" x2="702.5" y2="379.3" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="362.7" x2="702.5" y2="362.7" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="346.0" x2="702.5" y2="346.0" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="329.3" x2="702.5" y2="329.3" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="312.7" x2="702.5" y2="312.7" stroke="#2b211c" stroke-width="0.7"/>
+<line x1="632.5" y1="296.0" x2="702.5" y2="296.0" stroke="#2b211c" stroke-width="0.7"/>
+<rect x="627.5" y="296.0" width="5.0" height="150.0" rx="0" fill="#3b2a22" stroke="none" stroke-width="1" opacity="1.0"/>
+<path d="M 592.5 272.0 L 592.5 478.0 L 667.5 478.0 L 667.5 304.0" stroke="#d4876a" stroke-width="1.6" fill="none"/>
+<path d="M 662.5 312.0 L 667.5 304.0 L 672.5 312.0" fill="none" stroke="#d4876a" stroke-width="1.6"/>
+<text x="592.5" y="258.0" font-size="10" font-weight="700" fill="#d4876a" text-anchor="middle" dominant-baseline="middle">DN</text>
+<text x="638.0" y="252.0" font-size="11" font-weight="700" fill="#2b211c" text-anchor="middle" dominant-baseline="middle">MUMTY</text>
+<text x="638.0" y="270.0" font-size="9" font-weight="400" fill="#8a7d72" text-anchor="middle" dominant-baseline="middle">(water tank on top)</text>
+<text x="340.0" y="650.0" font-size="13" font-weight="700" fill="#2b211c" text-anchor="middle" dominant-baseline="middle">ROOF TERRACE</text>
+<text x="340.0" y="672.0" font-size="10" font-weight="400" fill="#8a7d72" text-anchor="middle" dominant-baseline="middle">= floor of the future 2nd floor (reception + rooms)</text>
+<text x="340.0" y="760.0" font-size="10" font-weight="400" fill="#d4876a" text-anchor="middle" dominant-baseline="middle">pink squares: column stubs with capped starter bars</text>
+<line x1="110.0" y1="1092.0" x2="710.0" y2="1092.0" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="106.0" y1="1096.0" x2="114.0" y2="1088.0" stroke="#2b211c" stroke-width="1.2"/>
+<line x1="110.0" y1="1102.0" x2="110.0" y2="1082.0" stroke="#2b211c" stroke-width="0.6"/>
+<line x1="706.0" y1="1096.0" x2="714.0" y2="1088.0" stroke="#2b211c" stroke-width="1.2"/>
+<line x1="710.0" y1="1102.0" x2="710.0" y2="1082.0" stroke="#2b211c" stroke-width="0.6"/>
+<text x="410.0" y="1092.0" font-size="11" font-weight="400" fill="#2b211c" text-anchor="middle" dominant-baseline="middle"><tspan dy="-9">30'-0"</tspan></text>
+<line x1="66.0" y1="1020.0" x2="66.0" y2="220.0" stroke="#2b211c" stroke-width="0.8"/>
+<line x1="62.0" y1="1024.0" x2="70.0" y2="1016.0" stroke="#2b211c" stroke-width="1.2"/>
+<line x1="56.0" y1="1020.0" x2="76.0" y2="1020.0" stroke="#2b211c" stroke-width="0.6"/>
+<line x1="62.0" y1="224.0" x2="70.0" y2="216.0" stroke="#2b211c" stroke-width="1.2"/>
+<line x1="56.0" y1="220.0" x2="76.0" y2="220.0" stroke="#2b211c" stroke-width="0.6"/>
+<text x="57.0" y="620.0" font-size="11" font-weight="400" fill="#2b211c" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 57.0 620.0)">40'-0"</text></svg>
