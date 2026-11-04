@@ -17,7 +17,7 @@ generator/plans.py        dimensioned SVG floor plans
 output/index.html         web page: live 3D viewer (three.js) + renders + plans
 output/renders/*.jpg      Cycles renders
 output/plans/*.svg        ground floor, first floor, roof plans
-output/model/             home_hotel.blend (open in Blender 4.2+), home_hotel.glb (any 3D viewer), home_hotel.gltf.json (same model, used by the web page)
+output/model/             home_hotel.blend (saved with Blender 5.2), home_hotel.glb (any 3D viewer), home_hotel.gltf.json (same model, used by the web page)
 docs/PLAN.md              the brief, decisions and phases
 ```
 
