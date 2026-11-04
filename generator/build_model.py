@@ -75,6 +75,7 @@ def hex_rgba(h):
 class Builder:
     STYLE = "rajasthani"
     PALETTE = {}   # material overrides {name: (hex, rough, metal, extra)}
+    CHHATRIS = L.CHHATRIS   # roof corner kiosks (a style may drop them)
 
     def __init__(self):
         self.mats = {}
@@ -104,6 +105,15 @@ class Builder:
             except Exception:
                 pass
         m.diffuse_color = rgba
+        if extra.get("checker"):
+            # patterned floor tiles for renders (flat base colour is kept for glTF)
+            tc = nt.nodes.new("ShaderNodeTexCoord")
+            chk = nt.nodes.new("ShaderNodeTexChecker")
+            chk.inputs["Scale"].default_value = extra.get("checker_scale", 3.3)
+            chk.inputs["Color1"].default_value = rgba
+            chk.inputs["Color2"].default_value = hex_rgba(extra["checker"])
+            nt.links.new(tc.outputs["Object"], chk.inputs["Vector"])
+            nt.links.new(chk.outputs["Color"], bsdf.inputs["Base Color"])
         if extra.get("noise"):
             # subtle colour variation (lime plaster / stone) for renders only
             tc = nt.nodes.new("ShaderNodeTexCoord")
@@ -826,13 +836,9 @@ class Builder:
                                  (15.8, 2.0, 22.6, 19.6)]:
             for (a, b, c, d) in [(x0, y0, x0 + 0.25, y1), (x1 - 0.25, y0, x1, y1), (x0, y0, x1, y0 + 0.25)]:
                 self.box(a, b, L.GF + 0.01, c, d, L.GF + 0.03, "Marking", "bay")
-        # columns (stilt) with cream base & capital
+        # columns (stilt)
         for (x, y) in L.COLUMNS:
-            h = L.COL / 2 + 0.04
-            self.box(x - h, y - h, L.GF, x + h, y + h, L.GF_TOP - L.BEAM_D, "WallPink", "column")
-            self.box(x - h - 0.12, y - h - 0.12, L.GF, x + h + 0.12, y + h + 0.12, L.GF + 0.8, "Trim", "col_base")
-            self.box(x - h - 0.1, y - h - 0.1, L.GF_TOP - L.BEAM_D - 0.35, x + h + 0.1, y + h + 0.1,
-                     L.GF_TOP - L.BEAM_D, "Trim", "col_cap")
+            self.stilt_column(x, y)
         # beams
         for (x0, y0, x1, y1) in L.BEAMS:
             hw = 0.395  # a hair wider than the 9" walls (avoids coplanar faces)
@@ -913,13 +919,10 @@ class Builder:
         self.box(21.3, 24.3, mz - 0.25, 30.15, 40.15, mz, "Trim", "mumty_band")
         # mumty chhajja over its roof door
         self.chhajja("y", 21.625, -1, 36.0, 39.6, L.ROOF + 7.3, proj=1.1, brackets=True)
-        for (axis, c, u0, u1) in (("x", 24.65, 21.4, 30.0), ("x", 39.75, 21.4, 30.0),
-                                  ("y", 21.65, 24.4, 40.0), ("y", 29.75, 24.4, 40.0)):
-            self._wbox(axis, c - 0.25, c + 0.25, u0, u1, mz + 0.5, mz + 1.6, "WallPink", "mumty_par")
-            self.kangura(axis, c, 0.5, u0, u1, mz + 1.6)
+        self.mumty_top(mz)
         # chhatris on solid corner towers
         ct = L.ROOF + L.PARAPET_H + 0.95
-        for (x0, y0, size) in L.CHHATRIS:
+        for (x0, y0, size) in self.CHHATRIS:
             self.box(x0, y0, L.ROOF, x0 + size, y0 + size, ct, "WallPink", "c_tower")
             self.box(x0 - 0.1, y0 - 0.1, ct - 0.3, x0 + size + 0.1, y0 + size + 0.1, ct, "Trim", "c_band")
             self.chhatri(x0, y0, size, ct)
@@ -927,7 +930,7 @@ class Builder:
         for (x, y) in L.COLUMNS:
             if 22 <= x <= 30 and 25 <= y <= 40:
                 continue  # inside mumty
-            if any(x0 - 0.5 <= x <= x0 + s + 0.5 and y0 - 0.5 <= y <= y0 + s + 0.5 for x0, y0, s in L.CHHATRIS):
+            if any(x0 - 0.5 <= x <= x0 + s + 0.5 and y0 - 0.5 <= y <= y0 + s + 0.5 for x0, y0, s in self.CHHATRIS):
                 continue
             for dx in (-0.3, 0.3):
                 for dy in (-0.3, 0.3):
@@ -945,6 +948,19 @@ class Builder:
 
     def extras(self):
         """Style-specific additions (overridden by other styles)."""
+
+    def stilt_column(self, x, y):
+        h = L.COL / 2 + 0.04
+        self.box(x - h, y - h, L.GF, x + h, y + h, L.GF_TOP - L.BEAM_D, "WallPink", "column")
+        self.box(x - h - 0.12, y - h - 0.12, L.GF, x + h + 0.12, y + h + 0.12, L.GF + 0.8, "Trim", "col_base")
+        self.box(x - h - 0.1, y - h - 0.1, L.GF_TOP - L.BEAM_D - 0.35, x + h + 0.1, y + h + 0.1,
+                 L.GF_TOP - L.BEAM_D, "Trim", "col_cap")
+
+    def mumty_top(self, mz):
+        for (axis, c, u0, u1) in (("x", 24.65, 21.4, 30.0), ("x", 39.75, 21.4, 30.0),
+                                  ("y", 21.65, 24.4, 40.0), ("y", 29.75, 24.4, 40.0)):
+            self._wbox(axis, c - 0.25, c + 0.25, u0, u1, mz + 0.5, mz + 1.6, "WallPink", "mumty_par")
+            self.kangura(axis, c, 0.5, u0, u1, mz + 1.6)
 
     def _coping(self, w):
         (ax, ay), (bx, by) = w["a"], w["b"]
@@ -1070,6 +1086,9 @@ def build(cut_z=None, style="rajasthani"):
     if style == "odia":
         from style_odia import OdiaBuilder
         b = OdiaBuilder()
+    elif style == "chettinad":
+        from style_chettinad import ChettinadBuilder
+        b = ChettinadBuilder()
     else:
         b = Builder()
     b.reset()

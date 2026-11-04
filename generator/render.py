@@ -185,7 +185,7 @@ def main():
     ap.add_argument("--scale", type=int, default=100)
     ap.add_argument("--export-only", action="store_true")
     ap.add_argument("--no-export", action="store_true")
-    ap.add_argument("--style", default="rajasthani", choices=["rajasthani", "odia"])
+    ap.add_argument("--style", default="rajasthani", choices=["rajasthani", "odia", "chettinad"])
     a = ap.parse_args(argv)
     global STYLE
     STYLE = a.style
