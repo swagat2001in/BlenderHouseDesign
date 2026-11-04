@@ -73,6 +73,9 @@ def hex_rgba(h):
 
 
 class Builder:
+    STYLE = "rajasthani"
+    PALETTE = {}   # material overrides {name: (hex, rough, metal, extra)}
+
     def __init__(self):
         self.mats = {}
         self.colls = {}
@@ -81,7 +84,8 @@ class Builder:
     # ---------------------------------------------------------------- setup
     def reset(self):
         bpy.ops.wm.read_factory_settings(use_empty=True)
-        for name, (hx, rough, metal, extra) in MATS.items():
+        self.palette = dict(MATS, **self.PALETTE)
+        for name, (hx, rough, metal, extra) in self.palette.items():
             self.mats[name] = self._make_mat(name, hx, rough, metal, extra)
 
     def _make_mat(self, name, hx, rough, metal, extra):
@@ -138,7 +142,7 @@ class Builder:
             for link in list(nt.links):
                 if link.to_node == bsdf and link.to_socket.name in ("Base Color", "Normal"):
                     nt.links.remove(link)
-            bsdf.inputs["Base Color"].default_value = hex_rgba(MATS[name][0])
+            bsdf.inputs["Base Color"].default_value = hex_rgba(self.palette[name][0])
 
     def coll(self, name):
         if name not in self.colls:
@@ -196,7 +200,12 @@ class Builder:
         v1 = [bm.verts.new(P(p, q, c1)) for p, q in clean]
         if len(clean) > 4:
             tris = tessellate_polygon([[Vector((p, q, 0.0)) for p, q in clean]])
+            seen = set()
             for i, j, k in tris:
+                key = frozenset((i, j, k))
+                if len(key) < 3 or key in seen:   # collinear outlines can yield repeats
+                    continue
+                seen.add(key)
                 bm.faces.new((v0[i], v0[j], v0[k]))
                 bm.faces.new((v1[k], v1[j], v1[i]))
         else:
@@ -209,7 +218,7 @@ class Builder:
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
         return self._obj(name, bm, mat)
 
-    def revolve(self, profile, cx, cy, z0, mat, segs=24, sx=1.0, sy=1.0, name="rev"):
+    def revolve(self, profile, cx, cy, z0, mat, segs=24, sx=1.0, sy=1.0, name="rev", rot=0.0):
         """profile: [(r, z)] bottom->top (z relative to z0)."""
         bm = bmesh.new()
         rings = []
@@ -219,7 +228,7 @@ class Builder:
             else:
                 ring = []
                 for i in range(segs):
-                    a = 2 * math.pi * i / segs
+                    a = 2 * math.pi * i / segs + rot
                     ring.append(bm.verts.new(((cx + r * sx * math.cos(a)) * F,
                                               (cy + r * sy * math.sin(a)) * F, (z0 + z) * F)))
                 rings.append(ring)
@@ -926,11 +935,16 @@ class Builder:
                     self.sphere(x + dx, y + dy, L.ROOF + 2.0, 0.09, "Cap", 1)
             self.box(x - 0.55, y - 0.55, L.ROOF, x + 0.55, y + 0.55, L.ROOF + 0.25, "Concrete", "col_stub")
 
+        self.extras()
+
         # ---------------- FURNITURE
         self.coll("FURNITURE")
         for lvl, kind, rect, extra in L.FURNITURE:
             self.furniture(lvl, kind, rect, extra)
         # bay labels on floor (painted numbers skipped)
+
+    def extras(self):
+        """Style-specific additions (overridden by other styles)."""
 
     def _coping(self, w):
         (ax, ay), (bx, by) = w["a"], w["b"]
@@ -1052,8 +1066,12 @@ def apply_cut(z_ft, cut_mat):
         bm.free()
 
 
-def build(cut_z=None):
-    b = Builder()
+def build(cut_z=None, style="rajasthani"):
+    if style == "odia":
+        from style_odia import OdiaBuilder
+        b = OdiaBuilder()
+    else:
+        b = Builder()
     b.reset()
     b.build()
     join_by_material(b.colls)

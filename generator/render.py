@@ -4,6 +4,7 @@ Build the model, render the views and export .blend + .glb.
     /opt/bvenv/bin/python generator/render.py              # everything
     /opt/bvenv/bin/python generator/render.py --views hero --samples 32 --scale 50
     /opt/bvenv/bin/python generator/render.py --export-only
+    /opt/bvenv/bin/python generator/render.py --style odia       # Odia / Kalinga variant -> output/odia/
 
 Requires the `bpy` module (pip install bpy) or run inside Blender:
     blender -b -P generator/render.py -- --views hero
@@ -131,32 +132,42 @@ def interior_lights():
         bpy.context.scene.collection.objects.link(ob)
 
 
+STYLE = "rajasthani"
+
+
+def out_dir(*parts):
+    """Rajasthani (the original) writes to output/, other styles to output/<style>/."""
+    base = OUT if STYLE == "rajasthani" else os.path.join(OUT, STYLE)
+    return os.path.join(base, *parts)
+
+
 def render_view(name, samples, scale):
     v = VIEWS[name]
     t0 = time.time()
-    BM.build(cut_z=v["cut"])
+    BM.build(cut_z=v["cut"], style=STYLE)
     sky = setup_scene(samples, scale)
     sun(*v["sun"], sky=sky)
     if v.get("interior"):
         interior_lights()
         bpy.context.scene.render.resolution_y = 1280
     camera(v["loc"], v["target"], v["lens"], v.get("shift", 0.0))
-    path = os.path.join(OUT, "renders", f"{name}.jpg")
+    os.makedirs(out_dir("renders"), exist_ok=True)
+    path = out_dir("renders", f"{name}.jpg")
     bpy.context.scene.render.filepath = path
     bpy.ops.render.render(write_still=True)
     print(f"[render] {name} -> {path} ({time.time() - t0:.0f}s)", flush=True)
 
 
 def export():
-    b = BM.build()
-    os.makedirs(os.path.join(OUT, "model"), exist_ok=True)
-    blend = os.path.abspath(os.path.join(OUT, "model", "home_hotel.blend"))
+    b = BM.build(style=STYLE)
+    os.makedirs(out_dir("model"), exist_ok=True)
+    blend = os.path.abspath(out_dir("model", "home_hotel.blend"))
     sky = setup_scene(64, 100)
     sun(55, 38, sky)
     camera(**{k: VIEWS["hero"][k] for k in ("loc", "target", "lens")}, shift=VIEWS["hero"]["shift"])
     bpy.ops.wm.save_as_mainfile(filepath=blend, compress=True)
     b.simplify_materials()
-    glb = os.path.abspath(os.path.join(OUT, "model", "home_hotel.glb"))
+    glb = os.path.abspath(out_dir("model", "home_hotel.glb"))
     for ob in [o for o in bpy.data.objects if o.type in ("LIGHT", "CAMERA")]:
         bpy.data.objects.remove(ob)
     bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", export_apply=True,
@@ -174,7 +185,10 @@ def main():
     ap.add_argument("--scale", type=int, default=100)
     ap.add_argument("--export-only", action="store_true")
     ap.add_argument("--no-export", action="store_true")
+    ap.add_argument("--style", default="rajasthani", choices=["rajasthani", "odia"])
     a = ap.parse_args(argv)
+    global STYLE
+    STYLE = a.style
     os.makedirs(os.path.join(OUT, "renders"), exist_ok=True)
     if not a.export_only:
         for name in [n for n in a.views.split(",") if n]:

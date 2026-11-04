@@ -4,19 +4,23 @@ Concept design for a home-cum-guesthouse on a **30' x 40' (1,200 sq ft) plot in 
 
 - **Ground floor:** open stilt parking for 2 to 4 cars and 4 to 6 two-wheelers, plus a dog-leg stair entered directly from the road.
 - **First floor:** three guest rooms with attached baths and a 5' x 8' kitchenette. Rooms 2 and 3 have private arcaded sit-outs.
-- **Style:** traditional Rajasthani haveli. It uses Jaipur-pink lime plaster with cream outlines, jharokhas, chhajja eaves, cusped arches, jaali screens, a kangura parapet and domed chhatris.
+- **Styles:** two skins over the same plan:
+  - **Rajasthani haveli**: Jaipur-pink lime plaster with cream outlines, jharokhas, chhajja eaves, cusped arches, jaali screens, a kangura parapet and domed chhatris (`output/`).
+  - **Odia / Kalinga**: laterite walls with khondalite bands, corbelled stone openings, temple-style stone balusters, bay windows and roof pavilions with stepped *pidha* roofs, a *rekha* tower over the stair, a Konark-wheel relief and a Pattachitra mural (`output/odia/`).
 - **Future floors:** the column grid, footings, stair and roof slab are planned for G+3. Capped starter bars are left above the roof. The reception goes on the 2nd floor later.
 
 The whole design is generated from code. **Blender** (headless, as the `bpy` Python module) builds the 3D model from one layout file, renders it with Cycles, and exports `.blend` and `.glb` files. A small script draws the dimensioned plans from the same file.
 
 ```
 design/layout.py          single source of truth: plot, levels, walls, openings, rooms, furniture (feet)
-generator/build_model.py  Blender builder: walls, arches, jharokhas, chhatris, stair, furniture ...
+generator/build_model.py  Blender builder (Rajasthani): walls, arches, jharokhas, chhatris, stair, furniture ...
+generator/style_odia.py   Odia / Kalinga skin (subclass of the builder)
 generator/render.py       renders the views + exports output/model/home_hotel.{blend,glb}
 generator/plans.py        dimensioned SVG floor plans
 output/index.html         web page: live 3D viewer (three.js) + renders + plans
 output/renders/*.jpg      Cycles renders
 output/plans/*.svg        ground floor, first floor, roof plans
+output/odia/              same renders + model in the Odia / Kalinga style
 output/model/             home_hotel.blend (saved with Blender 5.2), home_hotel.glb (any 3D viewer), home_hotel.gltf.json (same model, used by the web page)
 docs/PLAN.md              the brief, decisions and phases
 ```
@@ -26,6 +30,7 @@ docs/PLAN.md              the brief, decisions and phases
 ```bash
 pip install bpy                     # Blender 5.x as a Python module (needs Python 3.13)
 python generator/render.py          # all views at full quality + .blend/.glb  (~10 min on 4 CPU cores)
+python generator/render.py --style odia   # the same for the Odia / Kalinga version -> output/odia/
 python generator/render.py --views hero --samples 32 --scale 50 --no-export   # quick preview
 python generator/plans.py           # SVG plans (plain Python, no Blender needed)
 ```
